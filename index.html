@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #65ceff;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+        }
+
+
+        .letter {
+            position: absolute;
+            width: 90%;
+            height: 150px;
+            background-color: rgb(139, 0, 253);
+            bottom: -30px; /* Ensures letter starts deeper inside the envelope */
+            left: 50%;
+            transform: translateX(-50%) translateY(10px) scale(1);
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Sans-serif", sans-serif;
+            font-size: 15px;
+            font-weight: bold;
+            color: #ffffff;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 4; /* Ensure letter appears above the envelope */
+        }
+        
+        /* Slide-up animation (increase Y value so letter fully comes out) */
+        @keyframes slideUp {
+            0% { transform: translateX(-50%) translateY(-100px) scale(1); opacity: 0; }
+            100% { transform: translateX(-50%) translateY(-150px) scale(1); opacity: 1; }
+        }
+        
+        
+        
+
+        @keyframes zoomEffect {
+            0% { transform: translateX(-50%) translateY(-150px) scale(1); }
+            100% { transform: translateX(-50%) translateY(-150px) scale(1.1); }
+        }
+
+        .container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        
+
+        .envelope {
+            position: absolute;
+            width: 200px;
+            height: 150px;
+            background-color: #3f3c3d;
+            border-radius: 10px;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #d1d1d1;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transition: transform 0.5s ease;
+            transform-origin: top;
+            z-index: 3;
+        }
+
+        
+
+        .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff2d55;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .button:hover {
+            background-color: #d91b42;
+        }
+
+        /* Open animation */
+        .open .flap {
+            transform: rotateX(180deg);
+        }
+
+        /* Step 1: Slide-up effect (moves letter fully out of envelope) */
+        .slide-up {
+            animation: slideUp 0.8s ease-in-out forwards;
+            opacity: 1 !important;
+        }
+
+        /* Step 2: Zoom effect (continuous) */
+        .zoom {
+            animation: zoomEffect 1.5s ease-in-out infinite alternate;
+            opacity: 1 !important;
+        }
+
+        
+
+        /* Fix the letter position */
+        
+
+
+    </style>
+</head>
+<body>
+
+    <div class="container" id="envelopeContainer">
+       <div class="letter" id="letter">
+    A gentle reminder that life may be draining sometimes, but don't forget to take care of yourself too. I hope you're proud of yourself for making it this far. :)<br>- Vince
+        </div>
+
+        <div class="envelope">
+           
+            <div class="flap"></div>
+            
+        </div>
+        
+    </div>
+        <button class="button" onclick="openEnvelope()">Open</button>
+    
+
+    <script>
+        function openEnvelope() {
+            let envelope = document.getElementById('envelopeContainer');
+            let letter = document.getElementById('letter');
+
+            // Open the flap
+            envelope.classList.add('open');
+
+            // Step 1: Slide-up effect first
+            setTimeout(() => {
+                letter.classList.add('slide-up');
+
+                // Step 2: After slide-up completes, trigger infinite zoom effect
+                setTimeout(() => {
+                    letter.classList.add('zoom');
+                }, 800); // Delay matches slide-up duration
+
+            }, 300); // Small delay to sync with flap opening
+        }
+    </script>
+
+</body>
+</html>
